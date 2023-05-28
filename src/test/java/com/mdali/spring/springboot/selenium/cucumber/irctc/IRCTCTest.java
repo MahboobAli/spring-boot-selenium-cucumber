@@ -25,39 +25,19 @@ public class IRCTCTest extends SpringBaseTestNGTest {
 
     @LazyAutowired
     private IRCTCPage irctcPage;
-
     @LazyAutowired
     private CaptchaService captchaService;
-
-    @Value("${screenshot.path}")
-    private Path path;
-
-    @Autowired
-    private Faker faker;
-
-    @Autowired
-    private ApplicationContext ctx;
-
+    @LazyAutowired
+    private ScreenshotService screenshotService;
     @Test
     public void irctcTest() throws IOException, TesseractException, InterruptedException {
         this.irctcPage.goTo();
         Assert.assertTrue(this.irctcPage.isAt());
-        File sourceFile = this.irctcPage.getCaptchaComponent().getCaptchaImage().getScreenshotAs(OutputType.FILE);
-        //File sourceFile = this.ctx.getBean(TakesScreenshot.class).getScreenshotAs(OutputType.FILE);
-        String imageName = faker.name().firstName() + ".png";
-        FileCopyUtils.copy(sourceFile, this.path.resolve(imageName).toFile());
-       // return imageName;
-        Assert.assertTrue( this.irctcPage.getCaptchaComponent().isAt());
-
-        this.captchaService.applyCaptcha(imageName);
-        Thread.sleep(1000);
-        this.ctx.getBean(IRCTCPage.class).close();
-        //this.irctcPage.close();
-        //Assert.assertTrue(this.sandPage.getSandLoginComponent().isAt());// this wait for timer to end and once submit button is visible
-        //this.sandPage.getSandLoginComponent().login("Mahboob Ali","dalkjfsdljlsd","1234");// it fires login information
-        //Assert.assertTrue(this.googlePage.getSearchResult().getCount() > 2);
-        //this.screenshotService.takeScreenShot();
-       // this.googlePage.close();
+        this.captchaService.applyCaptcha(this.screenshotService.takeScreenShot(this.irctcPage.getCaptchaComponent().getCaptchaImage()));
+        //Assert.assertTrue(this.irctcPage.getCaptchaComponent().isAt()); // this needed to be handled
+        Thread.sleep(2000); // it should be removed
+       // this.ctx.getBean(IRCTCPage.class).close();
+        this.irctcPage.close();
     }
 
 }

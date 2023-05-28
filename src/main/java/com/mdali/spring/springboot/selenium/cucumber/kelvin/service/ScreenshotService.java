@@ -28,19 +28,17 @@ public class ScreenshotService {
     @Autowired
     private Faker faker;
 
-    public String takeScreenShot() throws IOException {
+    public void takeScreenShot() throws IOException {
         File sourceFile = this.ctx.getBean(TakesScreenshot.class).getScreenshotAs(OutputType.FILE);
+        FileCopyUtils.copy(sourceFile, this.path.resolve(faker.name().firstName() + ".png").toFile());
+    }
+
+    public String takeScreenShot(WebElement captchaImage) throws IOException {
+        File sourceFile = captchaImage.getScreenshotAs(OutputType.FILE);
         String imageName = faker.name().firstName() + ".png";
         FileCopyUtils.copy(sourceFile, this.path.resolve(imageName).toFile());
         return imageName;
     }
-
-    /*public String takeScreenShot(WebElement captchaImage) throws IOException {
-        File sourceFile = this.ctx.getBean(TakesScreenshot.class).getScreenshotAs(OutputType.FILE);
-        String imageName = faker.name().firstName() + ".png";
-        FileCopyUtils.copy(sourceFile, this.path.resolve(imageName).toFile());
-        return imageName;
-    }*/
 
     public byte[] getScreenshot(){
         return this.ctx.getBean(TakesScreenshot.class).getScreenshotAs(OutputType.BYTES);
