@@ -14,8 +14,6 @@ public class SandTest extends SpringBaseTestNGTest {
     @LazyAutowired
     private SandPage sandPage;
 
-
-
     @LazyAutowired
     private ScreenshotService screenshotService;
 
@@ -24,8 +22,9 @@ public class SandTest extends SpringBaseTestNGTest {
         this.sandPage.goTo();
         Assert.assertTrue(this.sandPage.isAt());
         this.sandPage.getOnlineSandBookingsComponent().clickOnlineSandBookings();
-        Assert.assertTrue(this.sandPage.getSandLoginComponent().isAt());
-        this.sandPage.getSandLoginComponent().login("Mahboob Ali","dalkjfsdljlsd","1234");
+        Assert.assertTrue(this.sandPage.getOnlineSandBookingsComponent().isAt());
+        Assert.assertTrue(this.sandPage.getSandLoginComponent().isAt());// this wait for timer to end and once submit button is visible
+        this.sandPage.getSandLoginComponent().login("Mahboob Ali","dalkjfsdljlsd","1234");// it fires login information
         //Assert.assertTrue(this.googlePage.getSearchResult().getCount() > 2);
         this.screenshotService.takeScreenShot();
        // this.googlePage.close();

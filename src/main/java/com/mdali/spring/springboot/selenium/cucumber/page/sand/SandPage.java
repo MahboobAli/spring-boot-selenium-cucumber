@@ -12,8 +12,6 @@ public class SandPage extends Base {
     @Autowired
     private OnlineSandBookingsComponent onlineSandBookingsComponent;
 
-
-
     @Autowired
     private SandLoginComponent sandLoginComponent;
 

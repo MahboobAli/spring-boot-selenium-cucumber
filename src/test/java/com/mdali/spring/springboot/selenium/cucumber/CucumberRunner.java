@@ -6,11 +6,11 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = "classpath:features",
-        glue = "com.udemy.spring.springselenium.bdd",
+        glue = "com.mdali.spring.springboot.selenium.cucumber.bdd",
         tags =  "@visa",
         plugin = {
                 "pretty",
-                "html:/some-path/"
+                "html:target/cucumber/report.html"
         }
 )
 public class CucumberRunner extends AbstractTestNGCucumberTests {

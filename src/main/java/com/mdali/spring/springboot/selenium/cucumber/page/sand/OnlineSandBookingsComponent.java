@@ -21,6 +21,7 @@ public class OnlineSandBookingsComponent extends Base {
     }
 
     @Override
+    // it waits until Online Sand Bookings is displayed
     public boolean isAt() {
         return this.wait.until((d) -> this.onlineSandBookings.isDisplayed());
     }
